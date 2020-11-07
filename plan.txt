@@ -1,0 +1,2 @@
+1. add vutify
+2. create navbar component
