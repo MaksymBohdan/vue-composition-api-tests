@@ -1,2 +1,7 @@
-1. add vutify
-2. create navbar component
+--- 1. add bulma
+--- 2. create navbar component
+--- 3. add types 
+--- 4. test for timeline :
+adding data-test for keeping connection with tabs in case of html structure changes
+--- 5. add ref for selected tab in timeline
+6. TDD for post data render
