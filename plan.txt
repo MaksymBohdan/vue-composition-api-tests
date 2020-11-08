@@ -4,4 +4,5 @@
 --- 4. test for timeline :
 adding data-test for keeping connection with tabs in case of html structure changes
 --- 5. add ref for selected tab in timeline
-6. TDD for post data render
+--- 6. TDD for post data render
+--- 7.add delay and Suspense components (with 2 template inside)

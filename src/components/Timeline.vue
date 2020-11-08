@@ -25,12 +25,16 @@ import Panel from './Panel.vue';
 import { Period } from '@/types';
 import { todayPost, thisWeekPost, thisMonthPost } from '@/mocks';
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export default defineComponent({
   components: { TimelinePost, Panel },
-  setup() {
+  async setup() {
     const periods: Period[] = ['Today', 'This week', 'This month'];
     const selectedPeriod = ref<Period>('Today');
     const setPeriod = (period: Period) => (selectedPeriod.value = period);
+
+    await delay(2000);
 
     const posts = computed(() =>
       [todayPost, thisWeekPost, thisMonthPost].filter((post) => {
