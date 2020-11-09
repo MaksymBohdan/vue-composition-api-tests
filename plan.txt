@@ -6,3 +6,6 @@ adding data-test for keeping connection with tabs in case of html structure chan
 --- 5. add ref for selected tab in timeline
 --- 6. TDD for post data render
 --- 7.add delay and Suspense components (with 2 template inside)
+--- 8. create Flux store
+--- 9. add useStore hook
+--- 10. add router

@@ -19,13 +19,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import moment from 'moment';
+// COMONENTS
 import TimelinePost from './TimelinePost.vue';
 import Panel from './Panel.vue';
-
-import { Period } from '@/types';
-import { todayPost, thisWeekPost, thisMonthPost } from '@/mocks';
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+// OTHERS
+import { useStore } from '@/store';
+import { Period, Post } from '@/types';
 
 export default defineComponent({
   components: { TimelinePost, Panel },
@@ -34,10 +33,20 @@ export default defineComponent({
     const selectedPeriod = ref<Period>('Today');
     const setPeriod = (period: Period) => (selectedPeriod.value = period);
 
-    await delay(2000);
+    // STORE
+    const store = useStore();
+
+    if (!store.getState().posts.loaded) {
+      await store.fetchPosts();
+    }
+
+    const allPosts = store.getState().posts.ids.reduce<Post[]>((acc, id) => {
+      const post = store.getState().posts.all[id];
+      return acc.concat(post);
+    }, []);
 
     const posts = computed(() =>
-      [todayPost, thisWeekPost, thisMonthPost].filter((post) => {
+      allPosts.filter((post) => {
         if (
           selectedPeriod.value === 'Today' &&
           post.created.isAfter(moment().subtract(1, 'day'))

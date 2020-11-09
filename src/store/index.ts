@@ -52,3 +52,5 @@ class Store {
 }
 
 const store = new Store(initialState());
+
+export const useStore = () => store;
