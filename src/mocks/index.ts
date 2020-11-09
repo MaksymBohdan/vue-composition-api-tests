@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Post } from './types';
+import { Post } from '../types';
 
 export const basePost: Post = {
   id: 1,
