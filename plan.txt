@@ -9,3 +9,5 @@ adding data-test for keeping connection with tabs in case of html structure chan
 --- 8. create Flux store
 --- 9. add useStore hook
 --- 10. add router
+--- 11. add ref for not updating the prop
+--- 12. add content editable div for blog
