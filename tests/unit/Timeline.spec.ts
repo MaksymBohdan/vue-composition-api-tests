@@ -1,15 +1,31 @@
 import { mount } from '@vue/test-utils';
-import Timeline from '@/components/Timeline.vue';
+import Home from '@/components/Home.vue';
+import flushPromises from 'flush-promises';
+import * as mocks from '@/mocks';
 
-describe('Timeline', () => {
-  it('renders two 3 tabs', () => {
-    const wrapper = mount(Timeline);
+jest.mock('axios', () => ({
+  get: (url: string) => ({
+    data: [mocks.todayPost, mocks.thisWeekPost, mocks.thisMonthPost],
+  }),
+}));
+
+describe('Home', () => {
+  it('renders progress', () => {
+    const wrapper = mount(Home);
+
+    expect(wrapper.find('[data-test="progress"]').exists()).toBe(true);
+  });
+
+  it('renders two 3 tabs', async () => {
+    const wrapper = mount(Home);
+    await flushPromises();
 
     expect(wrapper.findAll('[data-test="period"]')).toHaveLength(3);
   });
 
   it('updates the period when clicked', async () => {
-    const wrapper = mount(Timeline);
+    const wrapper = mount(Home);
+    await flushPromises();
 
     const $today = wrapper.findAll('[data-test="period"]')[0];
     expect($today.classes()).toContain('is-active');
@@ -26,14 +42,16 @@ describe('Timeline', () => {
     expect($thisMonth.classes()).toContain('is-active');
   });
 
-  it('renders today posts by default', () => {
-    const wrapper = mount(Timeline);
+  it('renders today posts by default', async () => {
+    const wrapper = mount(Home);
+    await flushPromises();
 
     expect(wrapper.findAll('[data-test="post"]')).toHaveLength(1);
   });
 
   it('updates the post when clicked', async () => {
-    const wrapper = mount(Timeline);
+    const wrapper = mount(Home);
+    await flushPromises();
 
     const $today = wrapper.findAll('[data-test="period"]')[0];
     expect(wrapper.findAll('[data-test="post"]')).toHaveLength(1);
