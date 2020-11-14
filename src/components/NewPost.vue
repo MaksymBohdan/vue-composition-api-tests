@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <PostWriter :post="post" />
+    <PostWriter :post="post" @save="save" />
   </section>
 </template>
 
@@ -27,7 +27,11 @@ export default defineComponent({
       created: moment(),
     };
 
-    return { post };
+    const save = (post: Post) => {
+      console.log('save', post);
+    };
+
+    return { post, save };
   },
 });
 </script>

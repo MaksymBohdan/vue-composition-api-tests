@@ -22,15 +22,26 @@
         />
       </div>
       <div class="column is-one-half">
-        {{ markdown }}
+        <div v-html="html" />
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <button class="button is-primary is-pulled-right" @click="submit">
+          Submit
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
+import { parse, MarkedOptions } from 'marked';
+import debounce from 'lodash.debounce';
 import { Post } from '@/types';
+import { highlightAuto } from 'highlight.js';
 
 export default defineComponent({
   name: 'PostWriter',
@@ -40,28 +51,45 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, ctx) {
     const title = ref(props.post.title);
     const contentEditable = ref<null | HTMLDivElement>(null);
     const markdown = ref(props.post.markdown);
+    const html = ref('');
 
     const handleEdit = () => {
-      console.log('aaa');
-      if (contentEditable.value) {
-        markdown.value = contentEditable.value.innerText;
-      }
+      markdown.value = contentEditable.value!.innerText;
     };
 
     onMounted(() => {
-      if (contentEditable.value) {
-        contentEditable.value.innerText = markdown.value;
-      }
+      contentEditable.value!.innerText = markdown.value;
     });
+
+    const options: MarkedOptions = {
+      highlight: (code: string) => highlightAuto(code).value,
+    };
+
+    const updateHtml = (value: string) => (html.value = parse(value, options));
+
+    watch(() => markdown.value, debounce(updateHtml, 500), { immediate: true });
+
+    const submit = () => {
+      const newPost = {
+        ...props.post,
+
+        title: title.value,
+        markdown: markdown.value,
+        html: html.value,
+      };
+      ctx.emit('save', newPost);
+    };
+
     return {
       title,
       contentEditable,
       handleEdit,
-      markdown,
+      html,
+      submit,
     };
   },
 });
