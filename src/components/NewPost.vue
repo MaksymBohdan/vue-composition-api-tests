@@ -9,6 +9,8 @@ import moment from 'moment';
 import { defineComponent } from 'vue';
 import PostWriter from '@/components/PostWriter.vue';
 import { Post } from '@/types';
+import { useStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'NewPost',
@@ -18,6 +20,10 @@ export default defineComponent({
   },
 
   setup() {
+    // STORE
+    const store = useStore();
+    const router = useRouter();
+
     const post: Post = {
       id: -1,
       title: 'New post',
@@ -27,8 +33,9 @@ export default defineComponent({
       created: moment(),
     };
 
-    const save = (post: Post) => {
-      console.log('save', post);
+    const save = async (post: Post) => {
+      await store.saveNewPost(post);
+      router.push('/');
     };
 
     return { post, save };
