@@ -12,3 +12,4 @@ adding data-test for keeping connection with tabs in case of html structure chan
 --- 11. add ref for not updating the prop
 --- 12. add content editable div for blog and hightlights 
 --- 13. add tests for PostWriter
+--- 14. handle save new post
