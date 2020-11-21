@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { reactive, readonly } from 'vue';
-import { Post } from './../types/index';
+import { Post, User } from './../types';
 
 interface PostsState {
   ids: string[];
@@ -51,6 +51,10 @@ class Store {
 
     this.state.posts.ids.push(data.id.toString());
     this.state.posts.all[data.id] = data;
+  }
+
+  async createUser(user: User) {
+    console.log('user', user);
   }
 }
 

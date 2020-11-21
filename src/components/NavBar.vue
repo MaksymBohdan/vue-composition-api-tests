@@ -7,16 +7,18 @@
       </div>
     </div>
     <teleport to="#modal" v-if="modal.visible.value">
-      MODAL
+      <Signup />
     </teleport>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Signup from './Signup.vue';
 import { useModal } from '../compositions/useModal';
 
 export default defineComponent({
+  components: { Signup },
   setup() {
     return {
       modal: useModal(),
