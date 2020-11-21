@@ -1,5 +1,5 @@
+import { reactive, readonly, provide, inject } from 'vue';
 import axios from 'axios';
-import { reactive, readonly } from 'vue';
 import { Post, User } from './../types';
 
 interface PostsState {
@@ -60,4 +60,16 @@ class Store {
 
 const store = new Store(initialState());
 
-export const useStore = () => store;
+export const provideStore = () => {
+  provide('store', store);
+};
+
+export const createStore = () => {
+  return new Store(initialState());
+};
+
+export const useStore = () => {
+  const store = inject<Store>('store') as Store;
+
+  return store;
+};

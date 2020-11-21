@@ -23,6 +23,7 @@
 import { computed, defineComponent } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import { useModal } from './compositions/useModal';
+import { provideStore } from './store';
 
 export default defineComponent({
   name: 'App',
@@ -31,6 +32,7 @@ export default defineComponent({
   },
 
   setup() {
+    provideStore();
     const modal = useModal();
     const style = computed(() => ({
       display: modal.visible.value ? 'block' : 'none',

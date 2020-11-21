@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import Home from '@/components/Home.vue';
 import flushPromises from 'flush-promises';
 import * as mocks from '@/mocks';
+import { createStore } from '../../src/store';
 
 jest.mock('axios', () => ({
   get: (url: string) => ({
@@ -9,22 +10,32 @@ jest.mock('axios', () => ({
   }),
 }));
 
+const createHome = () => {
+  return mount(Home, {
+    global: {
+      provide: {
+        store: createStore(),
+      },
+    },
+  });
+};
+
 describe('Home', () => {
   it('renders progress', () => {
-    const wrapper = mount(Home);
+    const wrapper = createHome();
 
     expect(wrapper.find('[data-test="progress"]').exists()).toBe(true);
   });
 
   it('renders two 3 tabs', async () => {
-    const wrapper = mount(Home);
+    const wrapper = createHome();
     await flushPromises();
 
     expect(wrapper.findAll('[data-test="period"]')).toHaveLength(3);
   });
 
   it('updates the period when clicked', async () => {
-    const wrapper = mount(Home);
+    const wrapper = createHome();
     await flushPromises();
 
     const $today = wrapper.findAll('[data-test="period"]')[0];
@@ -43,14 +54,14 @@ describe('Home', () => {
   });
 
   it('renders today posts by default', async () => {
-    const wrapper = mount(Home);
+    const wrapper = createHome();
     await flushPromises();
 
     expect(wrapper.findAll('[data-test="post"]')).toHaveLength(1);
   });
 
   it('updates the post when clicked', async () => {
-    const wrapper = mount(Home);
+    const wrapper = createHome();
     await flushPromises();
 
     const $today = wrapper.findAll('[data-test="period"]')[0];
