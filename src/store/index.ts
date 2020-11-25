@@ -1,6 +1,13 @@
 import { reactive, readonly, provide, inject } from 'vue';
 import axios from 'axios';
-import { Post, User } from './../types';
+import { Post, User, Author } from './../types';
+
+interface AuthorState {
+  ids: string[];
+  all: Record<string, Author>;
+  loaded: boolean;
+  currentUserId?: string;
+}
 
 interface PostsState {
   ids: string[];
@@ -10,6 +17,7 @@ interface PostsState {
 
 interface State {
   posts: PostsState;
+  authors: AuthorState;
 }
 
 const initialPostsState = (): PostsState => ({
@@ -18,8 +26,16 @@ const initialPostsState = (): PostsState => ({
   loaded: false,
 });
 
+const initialAuthorsState = (): AuthorState => ({
+  ids: [],
+  all: {},
+  loaded: false,
+  currentUserId: undefined,
+});
+
 const initialState = (): State => ({
   posts: initialPostsState(),
+  authors: initialAuthorsState(),
 });
 
 class Store {
@@ -54,7 +70,11 @@ class Store {
   }
 
   async createUser(user: User) {
-    console.log('user', user);
+    const response = await axios.post<Author>('/users', user);
+    this.state.authors.all[response.data.id] = response.data;
+    this.state.authors.ids.push(response.data.id.toString());
+    this.state.authors.currentUserId = response.data.id.toString();
+    console.log(this.state);
   }
 }
 

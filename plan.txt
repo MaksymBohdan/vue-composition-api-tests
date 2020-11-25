@@ -13,4 +13,7 @@ adding data-test for keeping connection with tabs in case of html structure chan
 --- 12. add content editable div for blog and hightlights 
 --- 13. add tests for PostWriter
 --- 14. handle save new post
---- 15. validation
+--- 15. teleport modal
+--- 16. validation
+--- 17. add new User + test + mock
+--- 18. add markRaw for not making reactive

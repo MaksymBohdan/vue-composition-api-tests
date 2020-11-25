@@ -1,4 +1,4 @@
-import { Post } from './types/index';
+import { Post, Author } from './types/index';
 import { createApp } from 'vue';
 import axios from 'axios';
 import App from './App.vue';
@@ -20,16 +20,23 @@ axios.get = async (url: string) => {
   }
 };
 // @ts-ignore
-axios.post = async (url: string, post: Post) => {
+axios.post = async (url: string, payload: Post | Author) => {
   await delay(1000);
 
   if (url === '/posts') {
     return Promise.resolve({
-      data: { ...post, id: Date.now().toString() },
+      data: { ...payload, id: Date.now().toString() },
+    });
+  }
+
+  if (url === '/users') {
+    const { id: oldId, ...rest } = payload;
+
+    return Promise.resolve({
+      data: { id: Date.now().toString(), ...rest },
     });
   }
 };
-
 createApp(App)
   .use(router)
   .mount('#app');
