@@ -78,7 +78,7 @@ class Store {
   }
 }
 
-const store = new Store(initialState());
+export const store = new Store(initialState());
 
 export const provideStore = () => {
   provide('store', store);

@@ -1,6 +1,8 @@
+import { store } from './../store';
 import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/components/Home.vue';
 import NewPost from '@/components/NewPost.vue';
+import ShowPost from '@/components/ShowPost.vue';
 
 const routes = [
   {
@@ -12,12 +14,30 @@ const routes = [
     path: '/posts/new',
     name: 'New post',
     component: NewPost,
+    meta: { requiresAuth: true },
+  },
+  {
+    name: 'ShowPost',
+    path: '/posts/:id',
+    component: ShowPost,
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  // console.log()
+
+  if (to.meta.requiresAuth && !store.getState().authors.currentUserId) {
+    next({
+      name: 'Home',
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;
