@@ -33,7 +33,7 @@ const initialAuthorsState = (): AuthorState => ({
   currentUserId: undefined,
 });
 
-const initialState = (): State => ({
+export const initialState = (): State => ({
   posts: initialPostsState(),
   authors: initialAuthorsState(),
 });
@@ -83,8 +83,8 @@ export const provideStore = () => {
   provide('store', store);
 };
 
-export const createStore = () => {
-  return new Store(initialState());
+export const createStore = (initState: State) => {
+  return new Store(initState);
 };
 
 export const useStore = () => {
