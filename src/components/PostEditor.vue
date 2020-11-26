@@ -1,30 +1,30 @@
 <template>
-  <router-link v-if="canEdit" :to="to" class="button is-rounded is-link">
-    <i class="fas fa-edit" />
-  </router-link>
-  <div>Post title is: {{ post.title }}</div>
+  <div>Post Editor</div>
 </template>
 
 <script lang="ts">
+import { useStore } from '@/store';
 import { defineComponent } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from '../store';
+import { useRoute, useRouter } from 'vue-router';
 export default defineComponent({
   async setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const id = route.params.id as string;
-
     if (!store.getState().posts.loaded) {
       await store.fetchPosts();
     }
     const post = store.getState().posts.all[id];
+    const canEdit = post.authorId === store.getState().authors.currentUserId!;
 
-    const canEdit = store.getState().authors.currentUserId === post.authorId;
+    if (!canEdit) {
+      router.push('/');
+    }
+
     return {
       post,
       to: `/posts/${post.id}/edit`,
-      canEdit,
     };
   },
 });

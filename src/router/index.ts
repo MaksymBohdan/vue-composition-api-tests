@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/components/Home.vue';
 import NewPost from '@/components/NewPost.vue';
 import ShowPost from '@/components/ShowPost.vue';
+import EditPost from '@/components/EditPost.vue';
 
 const routes = [
   {
@@ -21,6 +22,14 @@ const routes = [
     path: '/posts/:id',
     component: ShowPost,
   },
+  {
+    name: 'EditPost',
+    path: '/posts/:id/edit',
+    component: EditPost,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({
@@ -29,8 +38,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log()
-
   if (to.meta.requiresAuth && !store.getState().authors.currentUserId) {
     next({
       name: 'Home',

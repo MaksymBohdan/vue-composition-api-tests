@@ -29,7 +29,7 @@ export default defineComponent({
       title: 'New post',
       markdown: '## New post\n Enter your post here...',
       html: '',
-      authorId: 0,
+      authorId: store.getState().authors.currentUserId!,
       created: moment(),
     };
 

@@ -6,7 +6,7 @@ interface AuthorState {
   ids: string[];
   all: Record<string, Author>;
   loaded: boolean;
-  currentUserId?: string;
+  currentUserId?: number;
 }
 
 interface PostsState {
@@ -73,8 +73,7 @@ class Store {
     const response = await axios.post<Author>('/users', user);
     this.state.authors.all[response.data.id] = response.data;
     this.state.authors.ids.push(response.data.id.toString());
-    this.state.authors.currentUserId = response.data.id.toString();
-    console.log(this.state);
+    this.state.authors.currentUserId = response.data.id;
   }
 }
 
