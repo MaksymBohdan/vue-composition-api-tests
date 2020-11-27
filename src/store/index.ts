@@ -15,7 +15,7 @@ interface PostsState {
   loaded: boolean;
 }
 
-interface State {
+export interface State {
   posts: PostsState;
   authors: AuthorState;
 }
