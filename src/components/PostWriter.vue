@@ -86,11 +86,11 @@ export default defineComponent({
     const submit = () => {
       const newPost = {
         ...props.post,
-
         title: title.value,
         markdown: markdown.value,
         html: html.value,
       };
+
       ctx.emit('save', newPost);
     };
 

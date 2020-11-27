@@ -1,19 +1,22 @@
 <template>
-  <div>
-    <nav class="panel is-primary">
-      <p class="panel-tabs is-primary">
-        <Panel
-          v-for="period in periods"
-          :key="period"
-          :period="period"
-          :selectedPeriod="selectedPeriod"
-          @set-period="setPeriod"
-        />
-      </p>
-    </nav>
+  <div class="message is-primary is-marginless">
+    <div class="message-header">
+      <p>Posts</p>
+    </div>
+  </div>
+  <nav class="panel is-primary">
+    <p class="panel-tabs is-primary">
+      <Panel
+        v-for="period in periods"
+        :key="period"
+        :period="period"
+        :selectedPeriod="selectedPeriod"
+        @set-period="setPeriod"
+      />
+    </p>
 
     <TimelinePost v-for="post in posts" :key="post.id" :post="post" />
-  </div>
+  </nav>
 </template>
 
 <script lang="ts">

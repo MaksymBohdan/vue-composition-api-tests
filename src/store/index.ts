@@ -69,6 +69,11 @@ class Store {
     this.state.posts.all[data.id] = data;
   }
 
+  async updatePost(post: Post) {
+    const { data } = await axios.put<Post>('/posts', post);
+    this.state.posts.all[data.id] = data;
+  }
+
   async createUser(user: User) {
     const response = await axios.post<Author>('/users', user);
     this.state.authors.all[response.data.id] = response.data;
