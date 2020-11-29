@@ -16,7 +16,7 @@ const createHome = () => {
       provide: {
         store: createStore(initialState()),
       },
-      overwrite the global component
+      // overwrite the global component
       components: {
         RouterLink: {
           template: '<div/>',
