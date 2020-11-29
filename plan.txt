@@ -17,3 +17,4 @@ adding data-test for keeping connection with tabs in case of html structure chan
 --- 16. validation
 --- 17. add new User + test + mock
 --- 18. add markRaw for not making reactive
+--  19. add component and stubs for mount component in tests

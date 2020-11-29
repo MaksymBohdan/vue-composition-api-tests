@@ -1,7 +1,7 @@
 import { Post } from '@/types/index';
 import { mount } from '@vue/test-utils';
 import NewPost from '@/components/NewPost.vue';
-import { createStore } from '../../src/store';
+import { createStore, initialState } from '../../src/store';
 
 const mockRoutes: string[] = [];
 
@@ -21,7 +21,7 @@ jest.mock('axios', () => ({
 
 describe('New post', () => {
   it('creates a post and routes', async () => {
-    const store = createStore();
+    const store = createStore(initialState());
     const wrapper = mount(NewPost, {
       global: {
         provide: {

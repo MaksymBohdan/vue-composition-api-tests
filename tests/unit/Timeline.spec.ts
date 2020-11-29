@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import Home from '@/components/Home.vue';
 import flushPromises from 'flush-promises';
 import * as mocks from '@/mocks';
-import { createStore } from '../../src/store';
+import { createStore, initialState } from '../../src/store';
 
 jest.mock('axios', () => ({
   get: (url: string) => ({
@@ -14,8 +14,21 @@ const createHome = () => {
   return mount(Home, {
     global: {
       provide: {
-        store: createStore(),
+        store: createStore(initialState()),
       },
+      overwrite the global component
+      components: {
+        RouterLink: {
+          template: '<div/>',
+        },
+      },
+
+      // overwrite the local component
+      // stubs: {
+      //   RouterLink: {
+      //     template: '<div/>',
+      //   },
+      // },
     },
   });
 };

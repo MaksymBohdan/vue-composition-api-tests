@@ -25,13 +25,13 @@ export default defineComponent({
   async setup() {
     const route = useRoute();
     const store = useStore();
-    const id = route.params.id as string;
-    const post = store.getState().posts.all[id];
-    const canEdit = store.getState().authors.currentUserId === post.authorId;
 
     if (!store.getState().posts.loaded) {
       await store.fetchPosts();
     }
+    const id = route.params.id as string;
+    const post = store.getState().posts.all[id];
+    const canEdit = store.getState().authors.currentUserId === post.authorId;
 
     return {
       post,
